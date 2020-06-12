@@ -1,3 +1,7 @@
+provider "aws" {
+  region = "ap-northeast-1"
+}
+
 # 外部のデータを参照
 # この場合だと 最新の Amazon Linux 2 の AMI
 data "aws_ami" "recent_amazon_linux_2" {
@@ -30,6 +34,24 @@ variable "kumashun_instance_type" {
 
 output "example_instance_id" {
   value = aws_instance.example.id
+}
+
+resource "aws_security_group" "example_ec2" {
+  name = "example-ec2"
+
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  regress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_instance" "example" {
