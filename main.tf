@@ -7,6 +7,10 @@ variable "kumashun_instance_type" {
   default = "t3.micro"
 }
 
+output "example_instance_id" {
+  value = aws_instance.example.id
+}
+
 resource "aws_instance" "example" {
   ami           = local.default_ami
   instance_type = var.kumashun_instance_type
